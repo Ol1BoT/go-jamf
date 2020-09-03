@@ -153,7 +153,6 @@ func (j *Client) RestartDeviceChannel(d MobileDevice, c chan string) {
 	c <- res
 
 	return
-
 }
 
 //NewJamfClient requires BasicAuth to authenticate with JAMF Server
