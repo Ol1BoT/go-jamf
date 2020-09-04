@@ -123,38 +123,6 @@ func (j *Client) RestartDevice(d int) (int, error) {
 	return resp.StatusCode, nil
 }
 
-//RestartDeviceChannel takes in a channel of Mobile Device and returns a channel of results which includes MobileDevice plus a Success indicator
-func (j *Client) RestartDeviceChannel(d MobileDevice, c chan string) {
-
-	URL := fmt.Sprintf("%s/JSSResource/mobiledevicecommands/command/RestartDevice/id/%d", j.BaseURL, d.ID)
-
-	success := false
-
-	res := fmt.Sprintf("%d - %s restart: %t", d.ID, d.Name, success)
-
-	req, err := http.NewRequest("POST", URL, nil)
-	if err != nil {
-		c <- res
-		return
-	}
-
-	req.SetBasicAuth(j.usr, j.pw)
-
-	resp, err := j.httpClient.Do(req)
-	if err != nil {
-		c <- res
-		return
-	}
-
-	success = true
-
-	res = fmt.Sprintf("%d - %s restart: %t, status code: %d", d.ID, d.Name, success, resp.StatusCode)
-
-	c <- res
-
-	return
-}
-
 //NewJamfClient requires BasicAuth to authenticate with JAMF Server
 func NewJamfClient(URL string, username string, password string) *Client {
 
